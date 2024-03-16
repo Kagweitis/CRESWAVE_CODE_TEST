@@ -17,8 +17,6 @@ public class Comment {
 
     private String comment;
     private String commentorName;
+    private Long blogId;
 
-    @ManyToOne(targetEntity = Blog.class, cascade = CascadeType.ALL)
-    @JoinColumn(name = "id", referencedColumnName = "id")
-    private Blog blog;
 }

@@ -22,7 +22,7 @@ public class Blog {
     private String blogPost;
     private String author;
 
-    @OneToMany(targetEntity = Comment.class, cascade = CascadeType.ALL)
+    @OneToMany(targetEntity = Comment.class, cascade = CascadeType.ALL, orphanRemoval = true)
     @JoinColumn(name = "id", referencedColumnName = "id")
     private List<Comment> comments;
 }
