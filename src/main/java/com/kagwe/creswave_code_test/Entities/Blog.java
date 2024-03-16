@@ -21,9 +21,8 @@ public class Blog {
     private String title;
     private String blogPost;
     private String author;
-    private Boolean deleted;
+    private Boolean deleted = false;
 
-    @OneToMany(targetEntity = Comment.class, cascade = CascadeType.ALL, orphanRemoval = true)
-    @JoinColumn(name = "id", referencedColumnName = "id")
+    @OneToMany(mappedBy = "blog", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Comment> comments;
 }

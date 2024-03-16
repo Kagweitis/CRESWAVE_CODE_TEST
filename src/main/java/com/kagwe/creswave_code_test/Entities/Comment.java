@@ -17,7 +17,13 @@ public class Comment {
 
     private String comment;
     private String commentorName;
-    private Long blogId;
-    private Boolean deleted;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "blog_id", referencedColumnName = "id")
+    private Blog blog;
+
+//    private Long blogId;
+
+    private Boolean deleted =false;
 
 }

@@ -10,29 +10,29 @@ import org.springframework.lang.NonNull;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("api/v1/blog")
+@RequestMapping("api/v1/comments")
 @RequiredArgsConstructor
 public class CommentsController {
 
     private final CommentsService commentsService;
 
     @PostMapping("/new_comment")
-    public ResponseEntity<BlogResponse> postBlog(@RequestBody @NonNull Comment comment){
+    public ResponseEntity<BlogResponse> postComment(@RequestBody Comment comment){
         return commentsService.createComment(comment);
     }
 
     @GetMapping("/get_comments")
-    public ResponseEntity<BlogResponse> getAllBlogs(@RequestParam Long blogId){
-        return commentsService.getCommentsForBlog(blogId);
+    public ResponseEntity<BlogResponse> getAllComments(@RequestParam Long id){
+        return commentsService.getCommentsForBlog(id);
     }
 
     @PutMapping("/edit_blog")
-    public ResponseEntity<BlogResponse> editBlog(@RequestBody @NonNull Comment comment){
+    public ResponseEntity<BlogResponse> editComment(@RequestBody @NonNull Comment comment){
         return commentsService.editComment(comment);
     }
 
     @PutMapping("/delete_blog")
-    public ResponseEntity<BlogResponse> deleteBlog(@RequestParam @NonNull Long id){
+    public ResponseEntity<BlogResponse> deleteComment(@RequestParam @NonNull Long id){
         return commentsService.deleteComment(id);
     }
 }

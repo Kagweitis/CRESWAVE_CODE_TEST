@@ -11,7 +11,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
-import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
@@ -31,19 +30,12 @@ public class CommentsService {
         BlogResponse response = new BlogResponse();
 
         try{
-            AtomicReference<BlogResponse> res = new AtomicReference<>(new BlogResponse());
-            Optional<Blog> existingBlog = blogRepository.findById(comment.getBlogId());
-            BlogResponse resp = res.get();
-            existingBlog.ifPresentOrElse(existingBlog1 -> {
-                commentRepository.save(comment);
-                resp.setComments(Collections.singletonList(comment));
-                resp.setMessage("Success!");
-                resp.setCode(201);
-            }, () -> {
-                resp.setCode(404);
-                resp.setMessage("No blog with that ID found");
-            });
-            return ResponseEntity.ok().body(resp);
+//            log.info("blog id "+comment.);
+            commentRepository.save(comment);
+            response.setComments(Collections.singletonList(comment));
+            response.setMessage("comment posted");
+            response.setCode(201);
+            return ResponseEntity.ok().body(response);
         }catch (Exception e){
             log.error("an error occured while posting your comment: "+e.getMessage());
             response.setMessage("an error occured while posting your omment");

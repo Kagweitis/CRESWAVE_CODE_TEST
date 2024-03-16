@@ -11,6 +11,6 @@ import java.util.Optional;
 @Repository
 public interface CommentRepository extends JpaRepository<Comment, Long> {
 
-    @Query(nativeQuery = true, value = "select * from comment where blog_id = :blogId and deleted = false")
-    List<Comment> findByBlogId(Long blogId);
+    @Query(nativeQuery = true, value = "select * from comment where id = :id and deleted = false")
+    List<Comment> findByBlogId(Long id);
 }

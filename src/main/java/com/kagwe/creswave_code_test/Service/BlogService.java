@@ -2,6 +2,7 @@ package com.kagwe.creswave_code_test.Service;
 
 import com.kagwe.creswave_code_test.DTO.BlogResponse;
 import com.kagwe.creswave_code_test.Entities.Blog;
+import com.kagwe.creswave_code_test.Entities.Comment;
 import com.kagwe.creswave_code_test.Repository.BlogRepository;
 import com.kagwe.creswave_code_test.Repository.CommentRepository;
 import lombok.RequiredArgsConstructor;
