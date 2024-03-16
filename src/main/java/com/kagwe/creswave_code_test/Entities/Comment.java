@@ -18,5 +18,6 @@ public class Comment {
     private String comment;
     private String commentorName;
     private Long blogId;
+    private Boolean deleted;
 
 }
