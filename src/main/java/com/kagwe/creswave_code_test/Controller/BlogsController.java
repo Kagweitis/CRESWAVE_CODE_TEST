@@ -28,12 +28,12 @@ public class BlogsController {
     }
 
     @PutMapping("/edit_blog")
-    public ResponseEntity<BlogResponse> editBlog(@RequestBody Blog blog){
+    public ResponseEntity<BlogResponse> editBlog(@RequestBody @NonNull Blog blog){
         return blogService.editBlog(blog);
     }
 
     @PutMapping("/delete_blog")
-    public ResponseEntity<BlogResponse> deleteBlog(@RequestParam Long id){
+    public ResponseEntity<BlogResponse> deleteBlog(@RequestParam @NonNull Long id){
         return blogService.deleteBlog(id);
     }
 
