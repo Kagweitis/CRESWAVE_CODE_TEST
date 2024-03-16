@@ -7,6 +7,7 @@ import jakarta.persistence.Id;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.lang.NonNull;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -33,6 +34,7 @@ public class BlogsController {
     }
 
     @PutMapping("/delete_blog")
+    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<BlogResponse> deleteBlog(@RequestParam @NonNull Long id){
         return blogService.deleteBlog(id);
     }

@@ -7,6 +7,7 @@ import com.kagwe.creswave_code_test.Service.CommentsService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.lang.NonNull;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -32,6 +33,7 @@ public class CommentsController {
     }
 
     @PutMapping("/delete_blog")
+    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<BlogResponse> deleteComment(@RequestParam @NonNull Long id){
         return commentsService.deleteComment(id);
     }
