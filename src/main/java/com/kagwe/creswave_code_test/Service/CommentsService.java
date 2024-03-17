@@ -120,6 +120,7 @@ public class CommentsService {
         BlogResponse resp = new BlogResponse();
 
         try {
+            AtomicReference<ResponseEntity<BlogResponse>> responseEntity = new AtomicReference<>();
             AtomicReference<BlogResponse> res = new AtomicReference<>(new BlogResponse());
             Optional<Comment> existingComment = commentRepository.findById(id);
             existingComment.ifPresentOrElse(existingComment1 -> {
@@ -129,12 +130,14 @@ public class CommentsService {
                 response.setCode(200);
                 response.setMessage("Comment deleted successfully");
                 response.setComments(Collections.singletonList(existingComment1));
+                responseEntity.set(ResponseEntity.ok().body(response));
             }, () -> {
                 BlogResponse response = res.get();
                 response.setCode(404);
                 response.setMessage("No Comment with that Id found");
+                responseEntity.set(ResponseEntity.ok().body(response));
             });
-            return ResponseEntity.ok().body(resp);
+            return responseEntity.get();
         } catch (Exception e){
             log.error("an error occured while deleting comment: "+e.getMessage());
             resp.setMessage("an error occured while deleting comment. Try again later");

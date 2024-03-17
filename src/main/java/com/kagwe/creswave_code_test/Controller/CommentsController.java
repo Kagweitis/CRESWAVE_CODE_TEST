@@ -37,7 +37,7 @@ public class CommentsController {
         return commentsService.editComment(comment);
     }
 
-    @PutMapping("/delete_blog")
+    @PutMapping("/delete_comment")
     @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<BlogResponse> deleteComment(@RequestParam @NonNull Long id){
         return commentsService.deleteComment(id);

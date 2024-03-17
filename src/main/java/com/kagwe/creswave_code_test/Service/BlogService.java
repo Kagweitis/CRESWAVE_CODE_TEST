@@ -2,7 +2,6 @@ package com.kagwe.creswave_code_test.Service;
 
 import com.kagwe.creswave_code_test.DTO.BlogResponse;
 import com.kagwe.creswave_code_test.Entities.Blog;
-import com.kagwe.creswave_code_test.Entities.Comment;
 import com.kagwe.creswave_code_test.Repository.BlogRepository;
 import com.kagwe.creswave_code_test.Repository.CommentRepository;
 import lombok.RequiredArgsConstructor;
@@ -15,7 +14,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.util.Collections;
-import java.util.List;
 import java.util.Optional;
 import java.util.concurrent.atomic.AtomicReference;
 
@@ -75,9 +73,11 @@ public class BlogService {
         BlogResponse resp = new BlogResponse();
 
         try {
+            AtomicReference<ResponseEntity<BlogResponse>> responseEntity = new AtomicReference<>();
             AtomicReference<BlogResponse> res = new AtomicReference<>(new BlogResponse());
             Optional<Blog> existingBlog = blogRepository.findById(blogEdit.getId());
             existingBlog.ifPresentOrElse(existingBlog1 -> {
+                log.info("at existing blog part=======");
                 BlogResponse response = res.get();
                 existingBlog1.setBlogPost(blogEdit.getBlogPost() != null ? blogEdit.getBlogPost() : existingBlog.get().getBlogPost());
                 existingBlog1.setAuthor(blogEdit.getAuthor() != null ? blogEdit.getAuthor() : existingBlog.get().getAuthor());
@@ -86,12 +86,14 @@ public class BlogService {
                 response.setCode(200);
                 response.setMessage("Blog edited successfully");
                 response.setBlogs(Collections.singletonList(existingBlog1));
+                responseEntity.set(ResponseEntity.ok().body(response));
             }, () -> {
                 BlogResponse response = res.get();
                 response.setCode(404);
                 response.setMessage("No blog with that Id found");
+                responseEntity.set(ResponseEntity.ok().body(response));
             });
-            return ResponseEntity.ok().body(resp);
+            return responseEntity.get();
         } catch (Exception e){
             log.error("an error occured while editing blog: "+e.getMessage());
             resp.setMessage("an error occured while editing blog. Try again later");
@@ -104,6 +106,7 @@ public class BlogService {
         BlogResponse resp = new BlogResponse();
 
         try {
+            AtomicReference<ResponseEntity<BlogResponse>> responseEntity = new AtomicReference<>();
             AtomicReference<BlogResponse> res = new AtomicReference<>(new BlogResponse());
             Optional<Blog> existingBlog = blogRepository.findById(id);
             existingBlog.ifPresentOrElse(existingBlog1 -> {
@@ -113,12 +116,15 @@ public class BlogService {
                 response.setCode(200);
                 response.setMessage("Blog deleted successfully");
                 response.setBlogs(Collections.singletonList(existingBlog1));
+                log.info("at successful delete "+response);
+                responseEntity.set(ResponseEntity.ok().body(response));
             }, () -> {
                 BlogResponse response = res.get();
                 response.setCode(404);
                 response.setMessage("No blog with that Id found");
+                responseEntity.set(ResponseEntity.ok().body(response));
             });
-            return ResponseEntity.ok().body(resp);
+            return responseEntity.get();
         } catch (Exception e){
             log.error("an error occured while deleting blog: "+e.getMessage());
             resp.setMessage("an error occured while deleting blog. Try again later");
