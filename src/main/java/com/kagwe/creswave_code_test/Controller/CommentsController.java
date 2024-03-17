@@ -1,6 +1,7 @@
 package com.kagwe.creswave_code_test.Controller;
 
 import com.kagwe.creswave_code_test.DTO.BlogResponse;
+import com.kagwe.creswave_code_test.DTO.CommentRequest;
 import com.kagwe.creswave_code_test.Entities.Blog;
 import com.kagwe.creswave_code_test.Entities.Comment;
 import com.kagwe.creswave_code_test.Service.CommentsService;
@@ -18,13 +19,17 @@ public class CommentsController {
     private final CommentsService commentsService;
 
     @PostMapping("/new_comment")
-    public ResponseEntity<BlogResponse> postComment(@RequestBody Comment comment){
+    public ResponseEntity<BlogResponse> postComment(@RequestBody CommentRequest comment){
         return commentsService.createComment(comment);
     }
 
     @GetMapping("/get_comments")
-    public ResponseEntity<BlogResponse> getAllComments(@RequestParam Long id){
-        return commentsService.getCommentsForBlog(id);
+    public ResponseEntity<BlogResponse> getAllCommentsForABlog(@RequestParam Long id,
+                                                       @RequestParam(defaultValue = "0") int page,
+                                                       @RequestParam(defaultValue = "10") int size,
+                                                       @RequestParam(defaultValue = "createdAt") String sortBy,
+                                                       @RequestParam(defaultValue = "DESC") String sortOrder){
+        return commentsService.getCommentsForBlog(id, page, size, sortBy, sortOrder);
     }
 
     @PutMapping("/edit_blog")

@@ -24,8 +24,13 @@ public class BlogsController {
     }
 
     @GetMapping("/get_blogs")
-    public ResponseEntity<BlogResponse> getAllBlogs(){
-        return blogService.getAllBlogs();
+    public ResponseEntity<BlogResponse> getAllBlogs(
+            @RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "10") int size,
+            @RequestParam(defaultValue = "createdAt") String sortBy,
+            @RequestParam(defaultValue = "DESC") String sortOrder
+    ){
+        return blogService.getAllBlogs(page, size, sortBy, sortOrder);
     }
 
     @PutMapping("/edit_blog")

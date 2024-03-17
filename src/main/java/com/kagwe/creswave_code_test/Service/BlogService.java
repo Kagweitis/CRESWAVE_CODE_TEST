@@ -7,6 +7,10 @@ import com.kagwe.creswave_code_test.Repository.BlogRepository;
 import com.kagwe.creswave_code_test.Repository.CommentRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
@@ -40,18 +44,23 @@ public class BlogService {
         }
     }
 
-    public ResponseEntity<BlogResponse> getAllBlogs(){
+    public ResponseEntity<BlogResponse> getAllBlogs(int page, int size, String sortBy, String sortOrder){
         BlogResponse resp = new BlogResponse();
 
         try {
-            List<Blog> blogs = blogRepository.findAllByDeletedFalse();
+//            List<Blog> blogs = blogRepository.findAllByDeletedFalse();
+
+            Pageable pageable = PageRequest.of(page, size, Sort.by(Sort.Direction.fromString(sortOrder), sortBy));
+            Page<Blog> blogs = blogRepository.findAllByDeletedFalse(pageable);
+            log.info("-===============Size of content: "+blogs.getSize());
+
             if (blogs.isEmpty()){
                 resp.setMessage("No blogs available right now");
                 resp.setCode(204);
             } else {
                 resp.setCode(200);
                 resp.setMessage("Blogs found!");
-                resp.setBlogs(blogs);
+                resp.setBlogs(blogs.getContent());
             }
             return ResponseEntity.ok().body(resp);
         } catch (Exception e){

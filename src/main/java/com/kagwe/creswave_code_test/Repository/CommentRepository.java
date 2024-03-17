@@ -1,6 +1,8 @@
 package com.kagwe.creswave_code_test.Repository;
 
 import com.kagwe.creswave_code_test.Entities.Comment;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
@@ -13,4 +15,6 @@ public interface CommentRepository extends JpaRepository<Comment, Long> {
 
     @Query(nativeQuery = true, value = "select * from comment where id = :id and deleted = false")
     List<Comment> findByBlogId(Long id);
+
+    Page<Comment> findPageByBlogId(Long blogId, Pageable pageable);
 }

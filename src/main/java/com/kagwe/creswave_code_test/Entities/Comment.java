@@ -5,6 +5,10 @@ import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
+import org.apache.logging.log4j.CloseableThreadContext;
+import org.hibernate.annotations.CreationTimestamp;
+
+import java.time.Instant;
 
 @Entity
 @AllArgsConstructor
@@ -18,12 +22,15 @@ public class Comment {
     private String comment;
     private String commentorName;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "blog_id", referencedColumnName = "id")
-    private Blog blog;
+//    @ManyToOne(fetch = FetchType.LAZY)
+//    @JoinColumn(name = "blog_id", referencedColumnName = "id")
+//    private Blog blog;
 
-//    private Long blogId;
+    private Long blogId;
 
     private Boolean deleted =false;
+
+    @CreationTimestamp
+    private Instant createdAt;
 
 }
