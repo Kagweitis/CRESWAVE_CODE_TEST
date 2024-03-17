@@ -126,4 +126,30 @@ public class BlogService {
             return ResponseEntity.internalServerError().body(resp);
         }
     }
+
+    public ResponseEntity<BlogResponse> searchBlogByTitleOrContent(String titleKeyword, String contentKeyword, int page, int size) {
+        BlogResponse response = new BlogResponse();
+
+        try {
+            Pageable pageable = PageRequest.of(page, size);
+            log.info("pageable=======> "+pageable);
+
+            Page<Blog> foundBlogs = blogRepository.findByTitleContainingOrBlogPostContaining(titleKeyword, contentKeyword,pageable);
+
+            if (foundBlogs.isEmpty()){
+                response.setMessage("No blogs fit that criteria");
+                response.setCode(204);
+            } else {
+                response.setBlogs(foundBlogs.getContent());
+                response.setCode(200);
+                response.setMessage("Blogs found");
+            }
+            return ResponseEntity.ok().body(response);
+        } catch (Exception e){
+            log.error("an error occured while searching for blog: "+e.getMessage());
+            response.setMessage("an error occured while searching for blog. Try again later");
+            response.setCode(500);
+            return ResponseEntity.internalServerError().body(response);
+        }
+    }
 }

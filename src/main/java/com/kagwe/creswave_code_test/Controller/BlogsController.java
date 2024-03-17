@@ -44,4 +44,14 @@ public class BlogsController {
         return blogService.deleteBlog(id);
     }
 
+    @GetMapping("/search")
+    public ResponseEntity<BlogResponse> searchBlogByTitleOrContent(
+            @RequestParam(required = false) String titleKeyword,
+            @RequestParam(required = false) String contentKeyword,
+            @RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "10") int size
+    ){
+        return blogService.searchBlogByTitleOrContent(titleKeyword, contentKeyword, page, size);
+    }
+
 }
