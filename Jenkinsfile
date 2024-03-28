@@ -20,7 +20,7 @@ pipeline {
             }
             steps {
                 echo "deploying to dev"
-                bat 'BUILD_ID=dontKillMe start /b java -jar C:\\ProgramData\\Jenkins\\.jenkins\\workspace\\eswave-multi-branch-pipeline_dev\\target\\CRESWAVE_CODE_TEST-0.0.1-SNAPSHOT.jar'
+                bat 'start /b java -jar C:\\ProgramData\\Jenkins\\.jenkins\\workspace\\eswave-multi-branch-pipeline_dev\\target\\CRESWAVE_CODE_TEST-0.0.1-SNAPSHOT.jar'
             }
         }
         stage('Deploy for production') {
