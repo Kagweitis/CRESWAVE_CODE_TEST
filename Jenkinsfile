@@ -20,7 +20,7 @@ pipeline {
             }
             steps {
                 echo "deploying to dev"
-//                 bat 'java -jar C:\\ProgramData\\Jenkins\\.jenkins\\workspace\\254-reviews-multipipeline_dev\\target\\254-reviews-0.0.1-SNAPSHOT.jar'
+                bat 'java -jar C:\\ProgramData\\Jenkins\\.jenkins\\workspace\\eswave-multi-branch-pipeline_dev\\target\\CRESWAVE_CODE_TEST.jar'
             }
         }
         stage('Deploy for production') {
