@@ -20,6 +20,11 @@ pipeline {
             }
             steps {
                 echo "deploying to dev"
+                 bat(/"${mvnHome}\bin\mvn" -Dintegration-tests.skip=true clean package/)
+                 def pom = readMavenPom file: 'pom.xml'
+                 print pom.version
+                 junit '**//*target/surefire-reports/TEST-*.xml'
+                 archive 'target*//*.jar'
 //                 bat 'java -jar C:\\ProgramData\\Jenkins\\.jenkins\\workspace\\254-reviews-multipipeline_dev\\target\\254-reviews-0.0.1-SNAPSHOT.jar'
             }
         }
