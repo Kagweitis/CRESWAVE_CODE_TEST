@@ -1,0 +1,21 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: creswave-code-test-deployment
+  labels:
+    app: creswave-code-test
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: creswave-code-test
+  template:
+    metadata:
+      labels:
+        app: creswave-code-test
+    spec:
+      containers:
+      - name: creswave-code-test-container
+        image: kagweitis/creswave-code-test:latest
+        ports:
+        - containerPort: 8080
