@@ -2,27 +2,36 @@ pipeline {
     agent any
     environment {
         CI = 'true'
+        dockerImageName = "kagweitis/creswave-code-test"
+        dockerImage = ""
     }
     stages {
-        stage('Build') {
+        stage('Build image') {
             steps {
-                 bat 'mvn -B -DskipTests clean package'
+                 dockerImage = docker.build dockerImageName
             }
         }
-        stage('Test') {
-            steps {
-                echo "Testing"
+        stage('Pushing Image') {
+               environment {
+                   registryCredential = 'dockerhub-credentials'
+                    }
+               steps{
+                 script {
+                   docker.withRegistry( 'https://registry.hub.docker.com', registryCredential ) {
+                     dockerImage.push("latest")
+                   }
+                 }
+               }
+             }
+        stage('Deploying creswave-code-test container to Kubernetes') {
+              steps {
+                script {
+                  kubernetesDeploy(configs: "deployment.yaml",
+                                                 "service.yaml")
+                }
+              }
             }
-        }
-        stage('Deploy for development') {
-            when {
-                branch 'dev'
-            }
-            steps {
-                echo "deploying to dev"
-               // bat 'start /b java -jar C:\\ProgramData\\Jenkins\\.jenkins\\workspace\\eswave-multi-branch-pipeline_dev\\target\\CRESWAVE_CODE_TEST-0.0.1-SNAPSHOT.jar'
-            }
-        }
+          }
         stage('Deploy for production') {
             when {
                 branch 'production'
