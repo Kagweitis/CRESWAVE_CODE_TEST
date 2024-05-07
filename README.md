@@ -14,7 +14,7 @@ The application uses configuration properties as specified in app.properties fil
 - **spring.datasource.username**: Username for accessing the MySQL database. Set it to whatever username you use to access your MySQL Server
 - **spring.datasource.password**: Password for the specified database user. Set it to whatever password you use to access your MySQL Server
 
-```properties
+```properties 
     spring.datasource.url=jdbc:mysql://localhost:3306/blog_db
     spring.datasource.username=your_username
     spring.datasource.password=your_password
