@@ -9,7 +9,8 @@ pipeline {
         stage('build') {
             steps {
                 script {
-                    dockerImage = docker.build(dockerImageName)
+//                     dockerImage = docker.build(dockerImageName)
+                    bat "docker build -t ${dockerImageName} ."
                 }
             }
         }
