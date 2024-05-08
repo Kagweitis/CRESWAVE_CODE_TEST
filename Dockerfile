@@ -2,13 +2,13 @@ FROM amazoncorretto:17
 #Install maven
 RUN apt-get update
 RUN apt-get install -y maven
-
+COPY . /code
 WORKDIR /code
+RUN mvn package -DskipTests
 
-#Copy the SRC, LIB and pom.xml to WORKDIR
-ADD pom.xml /code/pom.xml
-ADD lib /code/lib
-ADD src /code/src
+#create a slim image
+FROM openjdk:11-jre-slim
+COPY --from=build /app/target/CRESWAVE_CODE_TEST-0.0.1-SNAPSHOT.jar /CRESWAVE_CODE_TEST-0.0.1-SNAPSHOT.jar
 
 EXPOSE 3326
 
