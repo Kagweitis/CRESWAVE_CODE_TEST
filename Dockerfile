@@ -14,8 +14,8 @@ RUN mvn package -DskipTests
 FROM amazoncorretto:17
 
 #create image
-COPY --from=build /code/CRESWAVE_CODE_TEST-0.0.1-SNAPSHOT.jar /CRESWAVE_CODE_TEST-0.0.1-SNAPSHOT.jar
+COPY --from=build /code/target/CRESWAVE_CODE_TEST-0.0.1-SNAPSHOT.jar /CRESWAVE_CODE_TEST-0.0.1-SNAPSHOT.jar
 
 EXPOSE 3326
 
-ENTRYPOINT ["java","-jar","target/CRESWAVE_CODE_TEST-0.0.1.jar"]
+ENTRYPOINT ["java","-jar","/CRESWAVE_CODE_TEST-0.0.1.jar"]
