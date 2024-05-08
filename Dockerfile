@@ -7,7 +7,6 @@ WORKDIR /code
 RUN mvn package -DskipTests
 
 #create a slim image
-FROM openjdk:11-jre-slim
 COPY --from=build /app/target/CRESWAVE_CODE_TEST-0.0.1-SNAPSHOT.jar /CRESWAVE_CODE_TEST-0.0.1-SNAPSHOT.jar
 
 EXPOSE 3326
