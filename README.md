@@ -19,6 +19,7 @@ The application uses configuration properties as specified in app.properties fil
     spring.datasource.username=your_username
     spring.datasource.password=your_password
 ```
+  
 
 
 ## Usage
