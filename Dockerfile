@@ -1,5 +1,5 @@
 # Stage 1: Build stage
-FROM amazoncorretto:17 AS build
+FROM maven:3.8.4-openjdk-17 AS build
 
 ##Install maven
 #RUN apt-get update
