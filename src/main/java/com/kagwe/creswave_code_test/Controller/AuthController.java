@@ -14,12 +14,14 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("api/v1")
 @RequiredArgsConstructor
 @Slf4j
+@CrossOrigin
 public class AuthController {
 
     private final AuthService service;
 
     @PostMapping("/register")
     public ResponseEntity<AuthResponse> registerUser(@RequestBody UserEntity user){
+        log.info("role ==============="+user.getRole());
         return service.registerUser(user);
     }
 
